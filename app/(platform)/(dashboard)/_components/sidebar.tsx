@@ -63,7 +63,7 @@ const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
   }
   return (
     <>
-      <div className=" font-medium text-xs items-center mb-1">
+      <div className=" font-medium text-xs flex items-center mb-1">
         <span className=" pl-4">Workspaces</span>
         <Link
           href="/select-org"
