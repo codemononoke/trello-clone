@@ -12,6 +12,7 @@ import { useAction } from "@/hooks/use-action";
 import { createdBoard } from "@/actions/create-board";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 type FormPopoverProps = {
   children: React.ReactNode;
@@ -29,9 +30,11 @@ const FormPopover = ({
   const { execute, fieldErrors } = useAction(createdBoard, {
     onSuccess: (data) => {
       console.log(data);
+      toast.success("Board created.");
     },
     onError: (error) => {
       console.log(error);
+      toast.error(error);
     },
   });
 
