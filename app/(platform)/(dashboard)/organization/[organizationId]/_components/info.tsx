@@ -2,7 +2,7 @@
 import React from "react";
 import { CreditCard } from "lucide-react";
 import Image from "next/image";
-import { useOrganization } from "@clerk/nextjs";
+import { useOrganization, ClerkLoaded } from "@clerk/nextjs";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Info = () => {
@@ -13,12 +13,14 @@ const Info = () => {
   return (
     <div className=" flex items-center gap-x-4">
       <div className=" w-[60px] h-[60px] relative">
-        <Image
-          src={organization?.imageUrl!}
-          alt={organization?.name!}
-          className=" rounded-md object-cover"
-          fill
-        />
+        <ClerkLoaded>
+          <Image
+            src={organization?.imageUrl!}
+            alt={organization?.name!}
+            className=" rounded-md object-cover"
+            fill
+          />
+        </ClerkLoaded>
       </div>
       <div className=" space-y-1">
         <p className=" font-semibold text-xl">{organization?.name}</p>
