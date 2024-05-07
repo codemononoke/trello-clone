@@ -32,14 +32,6 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  console.log({
-    imageId,
-    imageThumbUrl,
-    imageFullUrl,
-    imageLinkHtml,
-    imageUserName,
-  });
-
   let board;
 
   try {

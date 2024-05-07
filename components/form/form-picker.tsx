@@ -35,7 +35,7 @@ const FormPicker = ({ id, errors }: FormPickerProps) => {
           console.error("Failed to get images from Unsplash.");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setImages(defaultImages);
       } finally {
         setIsLoading(false);
