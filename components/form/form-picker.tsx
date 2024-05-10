@@ -67,6 +67,7 @@ const FormPicker = ({ id, errors }: FormPickerProps) => {
             }}
           >
             <input
+              aria-hidden
               type="radio"
               id={id}
               name={id}
