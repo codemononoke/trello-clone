@@ -6,6 +6,7 @@ import FormInput from "@/components/form/form-input";
 import { toast } from "sonner";
 import { useAction } from "@/hooks/use-action";
 import { updateList } from "@/actions/update-list";
+import ListOptions from "./list-options";
 
 type ListHeaderProps = {
   data: List;
@@ -105,6 +106,7 @@ const ListHeader = ({ data }: ListHeaderProps) => {
           {data.title}
         </div>
       )}
+      <ListOptions data={data} onAddCard={() => {}} />
     </div>
   );
 };
