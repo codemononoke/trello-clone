@@ -1,11 +1,12 @@
 "use client";
-import React, { ElementRef, useRef, useState } from "react";
+import React, { ElementRef, KeyboardEvent, useRef, useState } from "react";
 import { Board } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import FormInput from "@/components/form/form-input";
 import { toast } from "sonner";
 import { updateBoard } from "@/actions/update-board";
 import { useAction } from "@/hooks/use-action";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
 
 type BoardTitleFormProps = {
   data: Board;
@@ -14,6 +15,9 @@ type BoardTitleFormProps = {
 const BoardTitleForm = ({ data }: BoardTitleFormProps) => {
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
+
+  const [title, setTitle] = useState(data.title);
+  const [isEditing, setIsEditing] = useState(false);
 
   const { execute } = useAction(updateBoard, {
     onSuccess: (data) => {
@@ -25,9 +29,6 @@ const BoardTitleForm = ({ data }: BoardTitleFormProps) => {
       toast.error(error);
     },
   });
-
-  const [title, setTitle] = useState(data.title);
-  const [isEditing, setIsEditing] = useState(false);
 
   const enableEditing = () => {
     setIsEditing(true);
@@ -41,12 +42,26 @@ const BoardTitleForm = ({ data }: BoardTitleFormProps) => {
     setIsEditing(false);
   };
 
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      disableEditing();
+    }
+  };
+
+  useEventListener("keydown", onKeyDown);
+  useOnClickOutside(formRef, disableEditing);
+
   const onSubmit = (formData: FormData) => {
-    const title = formData.get("title") as string;
-    execute({
-      title,
-      id: data.id,
-    });
+    const newTitle = formData.get("title") as string;
+
+    if (title !== newTitle && newTitle.length > 3) {
+      execute({
+        title: newTitle,
+        id: data.id,
+      });
+    } else {
+      disableEditing();
+    }
   };
 
   const onBlur = () => {
