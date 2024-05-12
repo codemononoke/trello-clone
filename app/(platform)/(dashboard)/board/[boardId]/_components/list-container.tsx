@@ -73,6 +73,22 @@ const ListContainer = ({ data, boardId }: ListContainerProps) => {
 
         sourceList.cards = reorderedCards;
         setOrderedData(newOrderedData);
+      } else {
+        const [movedCard] = sourceList.cards.splice(source.index, 1);
+
+        movedCard.listId = destination.droppableId;
+
+        destinationList.cards.splice(destination.index, 0, movedCard);
+
+        sourceList.cards.forEach((card, i) => {
+          card.order = i;
+        });
+
+        destinationList.cards.forEach((card, i) => {
+          card.order = i;
+        });
+
+        setOrderedData(newOrderedData);
       }
     }
   };
