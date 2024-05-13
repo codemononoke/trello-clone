@@ -1,6 +1,7 @@
-import React, {type PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import ModalProvider from "@/components/providers/modal-provider";
 
 const PlatformLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -15,6 +16,7 @@ const PlatformLayout = ({ children }: PropsWithChildren) => {
       }}
     >
       <Toaster />
+      <ModalProvider />
       {children}
     </ClerkProvider>
   );
