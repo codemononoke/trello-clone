@@ -97,7 +97,7 @@ const ListContainer = ({ data, boardId }: ListContainerProps) => {
         sourceList.cards = reorderedCards;
         setOrderedData(newOrderedData);
 
-        executeUpdateCardOrder({ boardId:boardId, items: reorderedCards });
+        executeUpdateCardOrder({ boardId: boardId, items: reorderedCards });
       } else {
         const [movedCard] = sourceList.cards.splice(source.index, 1);
 
@@ -114,6 +114,11 @@ const ListContainer = ({ data, boardId }: ListContainerProps) => {
         });
 
         setOrderedData(newOrderedData);
+
+        executeUpdateCardOrder({
+          boardId: boardId,
+          items: destinationList.cards,
+        });
       }
     }
   };
