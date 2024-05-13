@@ -4,6 +4,9 @@ import type { ListWithCards } from "@/types";
 import ListForm from "./list-form";
 import ListItem from "./list-item";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import { toast } from "sonner";
+import { useAction } from "@/hooks/use-action";
+import { updateListOrder } from "@/actions/update-list-order";
 
 type ListContainerProps = {
   data: ListWithCards[];
@@ -19,6 +22,15 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 
 const ListContainer = ({ data, boardId }: ListContainerProps) => {
   const [orderedData, setOrderedData] = useState(data);
+
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+      toast.success("List reordered");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
 
   useEffect(() => {
     setOrderedData(data);
@@ -41,6 +53,7 @@ const ListContainer = ({ data, boardId }: ListContainerProps) => {
       );
 
       setOrderedData(items);
+      executeUpdateListOrder({items,boardId})
     }
 
     if (type === "card") {
