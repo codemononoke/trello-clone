@@ -52,6 +52,7 @@ const Description = ({ data }: DescriptionProps) => {
         queryKey: ["card", data.id],
       });
       toast.success(`Card ${data.title} updated.`);
+      disableEditing();
     },
     onError: (error) => {
       toast.error(error);
@@ -60,7 +61,7 @@ const Description = ({ data }: DescriptionProps) => {
 
   const onSubmit = (formData: FormData) => {
     const description = formData.get("description") as string;
-    const boardId = formData.get("boardId") as string;
+    const boardId = params.boardId as string;
 
     execute({
       id: data.id,
