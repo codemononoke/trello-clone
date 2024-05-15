@@ -14,6 +14,9 @@ const ActivityList = async () => {
     where: {
       orgId,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return (
     <ol className=" space-y-4 mt-4">
