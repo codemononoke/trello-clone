@@ -42,13 +42,6 @@ const BoardTitleForm = ({ data }: BoardTitleFormProps) => {
     setIsEditing(false);
   };
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      disableEditing();
-    }
-  };
-
-  useEventListener("keydown", onKeyDown);
   useOnClickOutside(formRef, disableEditing);
 
   const onSubmit = (formData: FormData) => {
