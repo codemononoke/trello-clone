@@ -62,7 +62,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             aria-describedby={`${id}-error`}
           />
         </div>
-        <FormErrors id={errors} errors={errors} />
+        <FormErrors id={id} errors={errors} />
       </div>
     );
   }

@@ -2,11 +2,11 @@ import { XCircle } from "lucide-react";
 
 type FormErrorsProps = {
   id: string;
-  errors: Record<string, string[] | undefined>;
+  errors: Record<string, string[] | undefined> | undefined;
 };
 
 const FormErrors = ({ id, errors }: FormErrorsProps) => {
-  if (!errors) null;
+  if (!errors) return null;
   return (
     <div
       id={`${id}-error`}
