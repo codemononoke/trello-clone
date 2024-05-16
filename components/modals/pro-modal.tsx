@@ -46,12 +46,7 @@ const ProModal = () => {
               <li>And more!</li>
             </ul>
           </div>
-          <Button
-            className=" w-full"
-            variant="primary"
-            disabled={isLoading}
-            onClick={onClick}
-          >
+          <Button className=" w-full" disabled={isLoading} onClick={onClick}>
             Upgrade
           </Button>
         </div>
