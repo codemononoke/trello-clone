@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/db";
 import { getAvailableCount } from "@/lib/org-limit";
 import { MAX_FREE_BOARDS } from "@/constants/boards";
+import { checkSubscription } from "@/lib/subscription";
 
 const BoardList = async () => {
   const { orgId } = auth();
@@ -25,6 +26,7 @@ const BoardList = async () => {
   });
 
   const availableCount = await getAvailableCount();
+  const isPro = await checkSubscription();
 
   const remainingBoards = MAX_FREE_BOARDS - availableCount;
 
@@ -49,23 +51,24 @@ const BoardList = async () => {
             <p className=" relative font-semibold text-white">{board.title}</p>
           </Link>
         ))}
-
         <FormPopover sideOffset={10} side="right">
           <div
             role="button"
-            className=" relative aspect-video h-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition"
+            className=" relative aspect-video h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition"
           >
             <p className=" text-sm">Create new board</p>
-            <span className=" text-xs">{`${remainingBoards} remaining`}</span>
+            <span className=" text-xs">
+              {isPro ? "Unlimited" : `${remainingBoards} remaining`}
+            </span>
+            <Hint
+              align="start"
+              sideOffset={1}
+              description={`Free workspace can hove upto 5 open boards. For unlimited boards, please upgrade this workspace.`}
+            >
+              <HelpCircle className=" absolute bottom-2 right-2 h-[14px] w-[14px]" />
+            </Hint>
           </div>
         </FormPopover>
-        <Hint
-          align="start"
-          sideOffset={1}
-          description={`Free workspace can hove upto 5 open boards. For unlimited boards, please upgrade this workspace.`}
-        >
-          <HelpCircle className=" absolute bottom-2 right-2 h-[14px] w-[14px]" />
-        </Hint>
       </div>
     </div>
   );
