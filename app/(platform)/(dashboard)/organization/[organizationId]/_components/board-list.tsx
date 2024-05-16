@@ -9,7 +9,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/db";
 import { getAvailableCount } from "@/lib/org-limit";
 import { MAX_FREE_BOARDS } from "@/constants/boards";
-import { cn } from "@/lib/utils";
 
 const BoardList = async () => {
   const { orgId } = auth();
