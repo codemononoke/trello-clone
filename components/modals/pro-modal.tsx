@@ -4,9 +4,27 @@ import Image from "next/image";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { useAction } from "@/hooks/use-action";
+import { stripeRedirect } from "@/actions/stripe-redirect";
+import { toast } from "sonner";
 
 const ProModal = () => {
   const proModal = useProModal();
+
+  const { execute, isLoading } = useAction(stripeRedirect, {
+    onSuccess: (data) => {
+      window.location.href = data;
+      toast.loading("Redirecting to checkout...");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const onClick = () => {
+    execute({});
+  };
+
   return (
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
       <DialogContent className=" max-w-md p-0 overflow-hidden">
@@ -28,7 +46,12 @@ const ProModal = () => {
               <li>And more!</li>
             </ul>
           </div>
-          <Button className=" w-full" variant="primary">
+          <Button
+            className=" w-full"
+            variant="primary"
+            disabled={isLoading}
+            onClick={onClick}
+          >
             Upgrade
           </Button>
         </div>
